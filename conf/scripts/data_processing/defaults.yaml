@@ -1,0 +1,8 @@
+graph_generation_datasets:
+  - dataset
+training_dataset: 
+  - dataset
+embeddings_generation_datasets:
+  - dataset
+
+train: True

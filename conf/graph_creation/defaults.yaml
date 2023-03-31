@@ -1,0 +1,16 @@
+graphs:
+  max_edge_size: 30
+
+subgraphs:
+  d_to_centroid: 500
+  num_subgraphs_per_graph: 100
+  overlap_threshold: 0.6
+  # if the selected nodes are have >overlap_threshold nodes in common
+  # with another sampled graph in sampled_indices, this graph won't be kept
+
+  # overlap_threshold=1 => all graphs are kept (can't have >1 ratio of common nodes)
+  # overlap_threshold=0 => 0 nodes in common
+  max_edge_size: ${..graphs.max_edge_size}
+
+dataset:
+  n_splits: 1

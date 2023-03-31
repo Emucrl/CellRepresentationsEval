@@ -1,0 +1,16 @@
+[tool.black]
+experimental_string_processing = true
+
+[tool.pylint.MASTER]
+generated-members = ["numpy.*", "torch.*"]
+disable = ["C0411"]
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+exclude = ["tests", "pyg_model_zoo.py","gcn_classification_utils.py"]
+ignore_missing_imports = true
+disallow_untyped_defs = true
+namespace_packages = false
+disable_error_code = "operator"

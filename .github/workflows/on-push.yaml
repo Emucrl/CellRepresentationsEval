@@ -1,0 +1,11 @@
+name: On Push
+permissions:
+  contents: "read"
+  id-token: "write"
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+  run-checks:
+    uses: ./.github/workflows/checks.yml

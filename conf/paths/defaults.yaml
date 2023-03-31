@@ -1,0 +1,18 @@
+---
+cfg_summary: ${.local_data_storage}/cfg.yaml
+dataset:
+  embeddings: ${local_data}/embeddings
+  message_passing: ${local_data}/message_passing
+  cells: ???
+  patient_graphs: ${local_data}/graphs
+  tls_masks: ${local_data}/tls_masks
+  subgraphs: ${local_data}/subgraphs/${paths.patientGraphs_name}/${paths.subgraphs_name}/${graph_creation.subgraphs.overlap_threshold}
+
+clinical_info_df: ???
+local_data_storage: ${local_data}/${exp_name}
+
+evaluation:
+  tls_outputs: ${..local_data_storage}/hydra_logs/tls_evaluation
+  tumor_outputs: ${..local_data_storage}/hydra_logs/cell_level_tumor_evaluation
+  indication_outputs: ${..local_data_storage}/hydra_logs/indication_evaluation
+  infiltration_outputs: ${..local_data_storage}/hydra_logs/infiltration_evaluation

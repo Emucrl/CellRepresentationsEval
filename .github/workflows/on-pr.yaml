@@ -1,0 +1,11 @@
+name: On PR
+permissions:
+  contents: "read"
+  id-token: "write"
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  run-checks:
+    uses: ./.github/workflows/checks.yml

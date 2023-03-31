@@ -1,0 +1,22 @@
+eval_dataset: dataset
+tls_min_size: 100
+min_mask_size: 5000
+bcells_query: cd20>cd20.mean()+cd20.std()
+
+n_iterations: 50
+cell_level_experiments:
+  gcn_optim_params:
+    lr: 1e-3
+    max_epochs: 2
+    early_stopping_patience: 5
+    checkpoint_path: ${local_data}/gcn_checkpoints
+
+graph_level_experiments:
+  gcn_optim_params:
+    lr: 1e-3
+    max_epochs: 2
+    early_stopping_patience: 5
+    checkpoint_path: ${local_data}/gcn_checkpoints
+  
+  k_bags: 30
+

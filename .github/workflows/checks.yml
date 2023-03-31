@@ -1,0 +1,63 @@
+name: Run Checks
+permissions:
+  contents: "read"
+  id-token: "write"
+on:
+  workflow_call:
+env:
+  python-version: '3.10'
+
+jobs:
+  format_check:
+    name: Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python ${{ env.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.python-version }}
+      - name: Install dependencies
+        run: |
+          conda create -n ifgraphs python=3.10
+          conda init bash
+          source /usr/share/miniconda/etc/profile.d/conda.sh
+          conda activate ifgraphs
+          pip install -r requirements.txt
+          echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
+
+      - name: Black
+        run: |
+          source /usr/share/miniconda/etc/profile.d/conda.sh
+          conda activate ifgraphs
+          black . --check 
+      - name: Flake
+        run: |
+          source /usr/share/miniconda/etc/profile.d/conda.sh
+          conda activate ifgraphs
+          flake8 . --max-line-length=88 --ignore=E226,E302,E41,W503,W605,E501,E203 --max-complexity=15
+      - name: Isort
+        run: |
+          source /usr/share/miniconda/etc/profile.d/conda.sh
+          conda activate ifgraphs
+          isort . --check --profile black
+
+      - name: Pylint
+        run: |
+          source /usr/share/miniconda/etc/profile.d/conda.sh
+          conda activate ifgraphs
+          pylint src --ignore-paths=src/submodules/ --fail-under=9
+
+      - name: Mypy
+        run: |
+          source /usr/share/miniconda/etc/profile.d/conda.sh
+          conda activate ifgraphs
+          mypy src scripts
+
+      - name: Tests
+        run: |
+          source /usr/share/miniconda/etc/profile.d/conda.sh
+          conda activate ifgraphs
+          pytest tests --cov=src/ --cov-report xml:cov.xml --cov src/ -ra
+

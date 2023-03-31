@@ -1,0 +1,25 @@
+defaults:
+  - paths: defaults
+  - embedding_generation: defaults
+  - scripts/evaluations: defaults
+  - scripts/data_processing: defaults
+  - graph_creation: defaults
+  - dgi: defaults
+
+local_data: ${hydra:runtime.cwd}/data
+
+### different domain names to enable reusing upstream graphs as a starting point
+paths:
+  patientGraphs_name: max_edge_size=${graph_creation.graphs.max_edge_size}
+  subgraphs_name: d_to_centroid=${graph_creation.subgraphs.d_to_centroid}
+  
+exp_name: CD8_PD1_PDL1
+
+hydra:
+  job:
+    chdir: True
+  run:
+    dir: ${paths.local_data_storage}/hydra_logs/${hydra.job.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  sweep:
+    dir: ${paths.local_data_storage}/hydra_logs/${hydra.job.name}/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}

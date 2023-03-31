@@ -1,0 +1,10 @@
+data/*
+*.pyc
+src/submodules/DGI/data/*
+lightning_logs/*
+.env
+*.coverage*
+.coverage
+nohup.out
+*core.*
+.mypy*

@@ -1,0 +1,62 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-added-large-files
+        args: ["--maxkb=40000"]
+
+  - repo: https://github.com/roy-ht/pre-commit-jupyter
+    rev: v1.2.1
+    hooks:
+      - id: jupyter-notebook-cleanup
+
+  - repo: https://github.com/ambv/black
+    rev: stable
+    hooks:
+      - id: black
+        language_version: python3.10
+        exclude: "src/submodules/"
+        name: black
+        description: "Black: The uncompromising Python code formatter"
+        entry: black
+        language: python
+        minimum_pre_commit_version: 2.9.2
+        require_serial: true
+        additional_dependencies: [".[jupyter]"]
+        types_or: [python, pyi, jupyter]
+
+  # - repo: https://github.com/pycqa/isort
+  #   rev: 5.5.4
+  #   hooks:
+  #     - id: isort
+  #       args: ["--profile", "black"]
+  #       exclude: "src/submodules/"
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: flake8
+        args:
+          [
+            "--max-line-length=88",
+            "--ignore=E226,E302,E41,W503,W605,E501,E203",
+            "--max-complexity=15",
+          ]
+        exclude: src\/submodules
+
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        require_serial: true
+        args: ["--fail-under=9", "--rcfile=pyproject.toml"]
+        exclude: src\/submodules|tests\/
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: ""
+    hooks:
+      - id: mypy
+        exclude: "tests/"

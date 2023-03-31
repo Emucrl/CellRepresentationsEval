@@ -1,0 +1,6 @@
+---
+best_model_config:
+  metric: train_loss
+  mode: min
+embedding_folder_name: ${dgi.experiment_name}
+mlflow_exp_name: ${dgi.mlflow.experiment_name}

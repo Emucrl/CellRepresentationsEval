@@ -1,0 +1,4 @@
+artifact_location: tests/test_data/mlruns/0
+experiment_id: "0"
+lifecycle_stage: active
+name: default
